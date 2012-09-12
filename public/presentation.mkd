@@ -103,15 +103,34 @@ not so many....
 
 # Gem: Whois
 
-		# Domain WHOIS
-		w = Whois::Client.new
-		w.query("google.com")
-		# => #<Whois::Record>
+	# Domain WHOIS
+	w = Whois::Client.new
+	w.query("google.com")
+	# => #<Whois::Record>
 
 
 Simone @weppos Carletti
 
 <https://github.com/weppos/whois>
+
+
+	r = Whois.whois("google.it")
+	# => #<Whois::Record ...>
+
+	r.available?
+	# => false
+	r.registered?
+	# => true
+
+	r.created_on
+	# => Fri Dec 10 00:00:00 +0100 1999
+
+	t = r.technical
+	# => #<Whois::Record::Contact ...>
+	t.id
+	# => "TS7016-ITNIC"
+	t.name
+	# => "Technical Services"
 
 
 # Framework: Padrino
@@ -164,7 +183,9 @@ there sure are more but...
 ![](/images/google_ruby_italian_search.png)
 
 
-#  ^^
+#  thanks to berlusconi  
+
+## and (inter)national press
 
 ![](/images/google_ruby_italian.png)
 
@@ -217,7 +238,7 @@ awesome!
 
 
 
-## slides: [http://github.com/makevoid/ruby-in-italy-presentation](github.com/makevoid/ruby-in-italy-presentation)
+### slides: [http://github.com/makevoid/ruby-in-italy-presentation](github.com/makevoid/ruby-in-italy-presentation)
 
   
 ### Francesco  [@makevoid](http://makevoid.com) Canessa
