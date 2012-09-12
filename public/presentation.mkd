@@ -191,6 +191,27 @@ there sure are more but...
 
 
 
+# User Groups
+
+### Ruby Social Club(s)
+
+- Milan - originally started by Mikamai
+
+- Rome
+
+- Florence 
+
+#### others:
+
+- FLOR
+
+![](/images/flor.png)
+
+<http://florenceonruby.it>
+ 
+- Malta (crazy!)
+
+
 
 
 # ..so 
