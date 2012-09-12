@@ -3,6 +3,16 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
   display:block;
 }
 
+
+a:hover {
+	color: #C00;
+}
+
+a, a:visited {
+	color: #FF0000;
+	text-decoration: none;
+}
+
 /* hide notes */
 .notes {
   display: none;
@@ -44,6 +54,24 @@ section:first-child h3 {
   text-align: right;
   font-size: 48px;
 }
+section:first-child h4 {
+  max-width: 816px;
+  text-align: right;
+  font-size: 30px;
+}
 section:first-child p {
   text-align: right;
+}
+
+ul {
+
+	margin: 0 0 0 30px;
+}
+
+img[alt='right'] {
+	float: right;
+}
+
+img {
+	max-width: 100%;
 }

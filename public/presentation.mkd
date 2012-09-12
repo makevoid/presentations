@@ -1,254 +1,223 @@
-# Testing Javascript applications
+# Ruby In Italy
 
-### Irina Dumitrascu
+#### Francesco [@makevoid](http://makevoid.com) Canessa
 
-ruby & cofeescript | [dira.ro](http://dira.ro) ,  [@dira\_geek\_girl](http://twitter.com/dira_geek_girl)
+Tokyo Rubyists Meetup
 
-23 August 2012
+12 Sep 2012
 
 
-# Why test automatically?
+# ita-ly
+
+![](/images/map_italy.png)
+
+
+
+# Conferences in Italy
+
+- Past and future!
+- Ruby and not only ruby!
+
+# Rails to Italy (2007)
+
+- Pisa, Italy
+
+![right](images/rails_to_italy_pisa.png)
+
+![](images/map_pisa_italy.png)
+
+
+
+
+# Italian Ruby day (2011 - 2012)
+
+- Free conference
+- In Milan
+- <http://rubyday.it/>
+- 2 tracks
+- 150 attendees
+
+# Italian Ruby day (2011 - 2012)
+
+![](images/italian_ruby_day_2012.png)
+
+
+# Italian Ruby day 
+
+## next one: ~ June 2013
+
+- follow <https://twitter.com/rubydayit>
+- <http://rubyday.it/>
+
+
+![](/images/map_milan_italy.png)
+
+
 
 ___
-* coming from the Rails community, where automated testing is a first-class citizen
-* testing JS automatically is slowly taking off
-* want to convince you to test your JS, if you don't do that already
+
+# non-ruby 
+
+## (but still good confs)
+
+# Node JS Conf
+
+### Brescia,  November 10th 2012
+
+![](images/conf_nodejs.png)
+
+
+http://nodejsconf.it
+
+
+# JS Day
+
+### Verona ~ May 2013
+
+![](images/conf_jsday.png)
+
+
+
+
+___
+
+# Linkedin Search
+
+
+![](images/linkedin_people_ruby.png)
+
+
+# Linkedin Search - Total:
+
+## 146,161 results
+
+
+# Linkedin Search - Italy:
+
+## 1,474 results
+
+not so many....
+
+# RubyGems
+
+
+# Gem: Whois
+
+		# Domain WHOIS
+		w = Whois::Client.new
+		w.query("google.com")
+		# => #<Whois::Record>
+
+
+Simone @weppos Carletti
+
+<https://github.com/weppos/whois>
+
+
+# Framework: Padrino
+
+- On top of Sinatra
+- Adds some useful libraries that make sinatra feels like rails
+
+<http://www.padrinorb.com/>
+
+
+# Padrino
+
+![](images/padrinorb.png)
+
+
+# Padrino
+### Contributors
+
+![](images/padrino_contribs.png)
+
+# Key/Value Database
+
+### Salvatore @antirez Sanfilippo
+
+![](images/redis_logo.png)
+
+- awesome idea
+- fast implementation
+- lots of cool and easy-made drivers (like ruby ones)
+
 
 # Well…
 
-![](/images/sleep.jpg)
+there sure are more but...
 
 
-# And…
-
-> Every time you hit refresh & click to test...
->
->   God kills a kitten.
-
----
-because that does not scale
-- not in time
-- and not in the possibility to cover all the tests (possible setups)
-
-no picture for this! :)
-
-# So if no refresh...
-
----
-show the test runer
-it's a program and it's definitely faster than me!
-
-# Show me the code!
-
----
-at this point we should dive into seeing some code
-
-# Show me the code!
-
-### no code to show :(
-
----
-at least, I did not have any nice code to show, yesterday
-
-# Show me the code!
-
-### no code to show :(
-### let's make a new app! :)
+# there is a problem
 
 
-# Show me the code!
+# someway
 
-### no code to show :(
-### let's make a new app! :)
-### let's write some code for showing presentations!!
-
-# Show me the code!
-
-### no code to show :(
-### let's make a new app! :)
-### let's write some code for showing presentations!!
-
-> Are you crazy?
-
-# Show me the code!
-
-### no code to show :(
-### let's make a new app! :)
-### let's write some code for showing presentations!!
-
-> Are you crazy?
-
-or
-
-> Do you hate sleeping?
-
----
-actually, both
-sounded like something cool to hack and nicely testable
-
-# How it works
-
-* the presentation is written in a markdown file
-* the markdown is parsed into HTML
-  * `h1` is the start of a new slide
-  * `hr` is the start of my notes (hidden)
-* and enhanced with `next` and `previous`
-
-# The fascinating part
-
-I wrote all this functionality test-first.
-
-# Which means
-
-1. thinking about what it needs to do
-1. break it in small functions
-
-# Which means
-
-1. thinking about what it needs to do
-1. break it in small functions
-1. choose a function and write a test for it. watch it fail.
-
-# Which means
-
-1. thinking about what it needs to do
-1. break it in small functions
-1. choose a function and write a test for it. watch it fail.
-1. write the code that fixes the test
-
-# Which means
-
-1. think about what it needs to do
-1. break it in small functions
-1. choose a function and write a test for it. watch it fail.
-1. write the code that fixes the test
-  * check for refactoring opportunities
-
----
-you need some discipline to do this, and when developing apps it's sometimes hard to think about how it should look like and not dive into the browser and refresh after each step.
-
-however, with a bit of discipline (and some mocking on a piece of paper) you can actually think in advance about what you are doing, and what is the result you expect. then simply write the test for the desired result.
-
-# And after everything's ready
-
-Create a HTML page and use all the pieces together.
-
-# And after everything's ready
-
-Which is, the presentation that you see right now.
+## is pretty hard to search ruby things in italy
 
 
-# How does it look like?
+# Do you know what happens 
 
-Let's see a simple test.
+## if we search this on google?
 
----
-* show the markdown test - first run it, then show the code
-  * explain `describe` and `it`
-* show the presentation test - first run it, then show the code
-  * explain that it tests with different conditions
-* show the presentation view test - first run it, then show the code
-  * collaborators are stubbed / mocked
-  * explain beforeEach
-  * explain spies
 
-# Kinds of testing
+![](/images/google_ruby_italian_search.png)
 
-## Unit testing
 
-Does this function behave properly?
+#  ^^
 
-## Integration testing
+![](/images/google_ruby_italian.png)
 
-Does the application behave properly?
+
+
+
+
+# ..so 
+
+## That's all for now!
 
 ---
 
-# Unit testing
+# credits:
 
-* break your code into small pieces
-* test each of them individually
+## presentation tool?
 
-# Unit testing
+- markdown 
+- html 
+- css 
+- js
 
-* fast and focused
-* makes sure independent pieces work
-* stub!
-  * external dependencies (HTTP requests, HTML code present in the page)
-  * internal dependencies (collaborators)
+awesome!
 
-# Unit testing
+### forked from
 
-## What do you need?
-
-* separate your JS from the DOM (no inline JS)
-* structure the code (classes, modules)
-* separate the definition and the running step (dom.ready … )
-* the smaller the thing to test, the better
-
-# Do's
-
-* test the public interface of each object
-* test for classes and ids
-* mock out dependecies (choose the level)
-* maintain the tests as you do with the code
-
-# Don'ts
-
-* do not test internal methods and state (just the public interface)
-* do not test for the same thing in multiple tests
-* do not test for texts appearing in the DOM (test for classes and ids)
+<http://github.com/dira/js-testing-presentation>
 
 
-# Added benefits
+- markdown text + screenshots! 
 
-* better structured code
-
----
-if I would have started with the refresh approach I might have ended with
-a pile of unstructured JS
-
-this way, it's separated into different classes with single responsabilities
-
-#
-
-![](/images/sleep.jpg)
-
-# Unit testing
-
-* but... no guarantee that they work well together!
-
-# Integration testing
-
-* create scenarios
-* make sure the application works as expected by the user
-* also called acceptance testing
-
-* slow
-* does not know about the implementation of individual pieces
-* you need to setup the whole application to a known state
+- started this presentation when I came here
 
 
 ---
-TODO examples
+
+# sponsor slide
+
+## I work for [@5apps](http://twitter.com/5apps)
+
+### "Deployment and distribution tools for HTML5/JS app developers."
+
+
+![](images/5apps_home.png)
+
+---
+
+
+# thanks!
 
 
 
-# Credits
+## slides: [http://github.com/makevoid/ruby-in-italy-presentation](github.com/makevoid/ruby-in-italy-presentation)
 
-
-Images
-
-* [http://www.flickr.com/photos/kaibara/4068996309/](http://www.flickr.com/photos/kaibara/4068996309/)
-
-CSS
-
-* [markdown css](http://kevinburke.bitbucket.org/markdowncss/)
-
-# TODO
-
-decide on expect() or .should
-learn how to make the font bigger in VIM and in terminal
-also need contrast
-what if no net? no pow?
-separate with white spaces code that I want to show
+  
+### Francesco  [@makevoid](http://makevoid.com) Canessa
