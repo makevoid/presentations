@@ -1,4 +1,5 @@
-# Ruby in Italy mini presentation
+# Ruby 2.0 presentation
+### FLOR Dicembre 2012
 
 you can find the presentation source in public/presentation.mkd
 

@@ -1,14 +1,14 @@
 $ ->
   success = (text) ->
     presentation = new Presentation
-      html: markdown.toHTML(text)
+      html: markdown.toHTML text
       jquery: $
 
-    $('body').html('')
+    $('body').html ''
 
     view = new PresentationView
       presentation: presentation
-      container: $('body')
+      container: $ 'body'
 
     view.showSlide(0)
 
@@ -19,10 +19,10 @@ $ ->
         when 39
           view.advance()
 
-    $('code').attr('data-language', 'javascript')
+    $('code').attr 'data-language', 'ruby'
     Rainbow.color()
 
   $.ajax '/presentation.mkd',
     success: success
     error: ->
-      alert 'error ' + arguments
+      alert 'error: ' + arguments
