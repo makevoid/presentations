@@ -1,19 +1,138 @@
 # Ruby 2.0.0
 
-#### Francesco [@makevoid](http://makevoid.com) Canessa
+![](/images/ruby2.png)
 
-Florence On Ruby
+![](/images/flor_small.png)
 
-Dicembre 2012
+19 Dicembre 2012
 
-# Get ruby 2.0.0 preview2 
+Francesco [@makevoid](http://makevoid.com) Canessa
 
-rvm install ruby-2.0.0-preview2 --verify-downloads 1
+# Get ruby 2.0.0 preview1 
 
-    <pre><code data-language="javascript">var testing = true;</code></pre>
+    rvm install ruby-2.0.0-preview1 --verify-downloads 1
 
 
-# test
+# Summary
+
+- Refinements
+- Enumerator::Lazy
+- Keyword arguments
+- Module#prepend
+
+
+# Superset of 1.9.3
+
+Should be 100% 1.9.3 retrocompatible
+
+
+# Refinements VS global pollution
+
+
+![](/images/global_pollution.jpg)
+
+# Refinements
+
+by Shugo Maeda (@shugomaeda)
+
+Matz's boss (NaCl)
+
+
+# Refinements
+
+### un metodo migliore al posto del monkeypatching
+#### col monkeypatching standard si modificano le proprieta' delle classi esistenti
+
+![](/images/monkeypatch.jpg)
+
+# Refinements
+
+    module Bar
+      refine String do
+        def say
+          puts self
+        end
+      end
+
+      "lol".say # => prints lol
+    end
+
+    "lol".say # => undefined method `say' for "lol":String (NoMethodError)
+
+# Refinements - Module#refine
+
+    module Bar
+      refine String do
+        def say
+          puts self
+        end
+      end
+
+      "lol".say # => prints lol
+    end
+
+    "lol".say # => undefined method `say' for "lol":String (NoMethodError)
+    
+lo "scope" dei cambiamenti effettuati rimane nel modulo del refinement
+
+
+# Refinements - Kernel#using
+
+    module Bar
+      refine String do
+        def say
+          puts self
+        end
+      end
+    end
+    
+    class Foo
+      using Bar
+      
+      def hello
+        "hello".say
+      end
+    end
+    
+    Foo.new.hello #=> prints hello
+
+
+# Refinements - Gem Examples
+
+all by Akira Matsuda
+
+- rspec-refinements
+- activerecord-refinements
+- activesupport-refinements
+
+rspec:
+
+    Object.new.respond_to? :should # => false
+    
+    # available only in 'describe' blocks, added to RSpec::World
+
+AR: 
+
+    Post.all( :title.like => "..." )
+    # as datamapper
+
+activesupport:
+    
+    # Fixnum
+    1.day.ago
+    
+    class YourController
+      using NumericExt::Time
+      
+      def index
+        @when = 1.day.ago
+        #...
+      end
+   
+
+<http://www.confreaks.com/videos/1275-rubyconf2012-ruby-2-0-on-rails>
+
+# Enumerator::Lazy
 
 
     [1,2,3].each # => ...
@@ -28,16 +147,378 @@ rvm install ruby-2.0.0-preview2 --verify-downloads 1
     # => [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24]
 
 
+# Enumerator::Lazy (2)
+
+
+    require 'date'
+
+    ETERNITY = Float::INFINITY
+
+    p (Date.today..ETERNITY).lazy.select{ |date|
+      date.month == 12 && date.day == 1 && date.sunday?
+    }.take(3).force
+
+    # => [#<Date: 2013-12-01 ((2456628j,0s,0n),+0s,2299161j)>, #<Date: 2019-12-01 ((2458819j,0s,0n),+0s,2299161j)>, #<Date: 2024-12-01 ((2460646j,0s,0n),+0s,2299161j)>]
+
+    # methods:
+    # map, flat_map, select, reject, grep, zip, take, take_while, drop, drop_while, cycle
+
+    # infos: http://railsware.com/blog/2012/03/13/ruby-2-0-enumerablelazy/
+
+RDoc:
+<http://www.ruby-doc.org/core-2.0/Enumerator/Lazy.html>
+
+# Enumerable::Lazy (3)
+
+    # Calcolare quali sono gli anni con piu' giorni festivi [ruby 2.0 Enumerable#lazy]
+
+    require 'date'
+
+    ETERNITY = Float::INFINITY
+
+    FESTE = [
+      { day:  1, month:  1, name: "Capodanno" },
+      { day:  6, month:  1, name: "Epifania" },
+      { day: 25, month:  4, name: "Liberazione" },
+      { day:  2, month:  6, name: "Festa della Repubblica" },
+      { day: 15, month:  8, name: "Ferragosto" },
+      { day: 11, month: 11, name: "Santi" },
+      { day:  8, month: 12, name: "Immacolata" },
+      { day: 25, month: 12, name: "Natale" },
+      { day: 26, month: 12, name: "S.Stefano" },
+    ]
+
+    (Date.today.year..ETERNITY).lazy.map do |year|
+      first_day = Date.new year, 1, 1
+      last_day  = Date.new(year+1, 1, 1)-1
+
+      count = (first_day...last_day).lazy.count do |date|
+        day = FESTE.find do |festa|
+          festa[:day] == date.day && festa[:month] == date.month
+        end
+        day && !date.saturday? && !date.sunday?
+      end
+      p year if count == 9
+      count
+    end.take(20).force
+
+    # => 2014, 2025, 2031 !! nessun giorno di festa e' sab o domenica
+
+gist: <https://gist.github.com/4192325>
+
+# Keyword Arguments (without)
+
+    def foo(options = {})
+      puts "#{options[:a]} #{options[:b]}"
+    end
+
+    foo(a: 'a', b: 'b') # => 'a b'
+
+# Keyword Arguments (without)
+
+    def foo(options = {})
+      puts "#{options[:a]} #{options[:b]}"
+    end
+
+    foo(a: 'a', b: 'b') # => 'a b'
+
+- options all over the place!
+
+# Keyword Arguments (without)
+
+    def foo(options = {})
+      puts "#{options[:a]} #{options[:b]}"
+    end
+
+    foo(a: 'a', b: 'b') # => 'a b'
+    
+
+- options/args all over the place!
+- no param validation (use Hash#fetch)
+- easy default values
+
+# Keyword Arguments (without)
+
+    def foo(args = {})
+      defaults = { a: 1, b: 2 }
+      values = defaults.merge args 
+      puts "a is #{values[:a]}, b is #{values[:b]}"
+    end
+
+    foo(b: 4) # => a is 1, b is 4
+    
+
+# Keyword Arguments!
+
+    def foo(a: 1, b: 2)
+      puts "a is #{a}, b is #{b}"
+    end
+
+    foo
+    # a is 1, b is 2
+
+    foo a: 3
+    # a is 3, b is 2
+
+    foo a: 3, b: 4
+    # a is 3, b is 4
+
+
+# Keyword Arguments: 
+
+## work with define method too
+
+    module A
+
+      define_method(:foo) do |str: "foo", num: 424242|
+        [str, num]
+      end
+
+    end
+
+    include A
+
+    p A.foo # => ["foo", 424242]
+
+
+# Core Team Ruby
+
+- matz: design
+- ko1 (Koichi Sasada): implementazione
+- nobu: fixing
+
+# Module#prepend story: before
+
+### alias method chain !
+
+    class A
+      def foo
+        puts 'foo'
+      end
+    end
+
+    class A
+      def foo_with_bar
+        foo_without_bar
+        puts 'foo'
+      end
+      alias_method_chain :foo, :bar
+    end
+
+    A.new.foo
+    #=> foo
+    # bar
+
+probl. di AMC, due librerie diverse patchano foo, foo_without_bar_and_baz
+
+# Module#prepend: include solution
+
+    class A
+      def foo
+        puts 'foo'
+        super
+      end
+    end
+
+    module B
+      def foo
+        puts 'foo (B)'
+      end
+    end
+
+    class A
+      include B
+    end
+
+# Module#prepend: include solution
+
+    class A
+      def foo
+        puts '-> A'
+        super
+      end
+    end
+
+    module B
+      def foo
+        puts '-> B'
+        super
+      end
+    end
+
+    module C
+      def foo
+        puts '-> C'
+        super
+      end
+    end
+
+    class A
+      include B
+      include C
+    end
+
+    A.new.foo # =>
+    # -> A
+    # -> B
+    # -> C
+
+
+ActionController#render
+
+# Module#prepend e' un pre-include
+
+    class A
+      def foo
+        puts 'original'
+      end
+    end
+
+    module B
+      def foo
+        super
+        puts 'from module'
+      end
+    end
+
+    class A
+      prepend B
+    end
+
+    A.new.foo
+    #=> original
+    # from module
+
+
+    # same as Module#include but the ordering is inversed
+    
+    
+# Module#prepend 
+
+    class A
+      def foo
+        puts 'original'
+      end
+    end
+
+    module B
+      def foo
+        super
+        puts 'from module B'
+      end
+    end
+
+    module C
+      def foo
+        super
+        puts 'from module C'
+      end
+    end
+
+    class A
+      prepend B
+      prepend C
+    end
+
+    A.new.foo
+    #=> original
+    # from module B
+    # from module C
+    
+    
+# Module#prepend
+
+    class A
+      def foo
+        puts 'original'
+      end
+    end
+
+    # ---
+
+    module B
+      def foo
+        super
+        puts 'from module B'
+      end
+    end
+
+    class B
+      prepend C
+    end
+
+    # ---
+
+    module C
+      def foo
+        super
+        puts 'from module C'
+      end
+    end
+
+    class A
+      prepend C
+    end
+
+    # ---
+
+    A.new.foo
+    #=> original
+    # from module B
+    # from module C
+
+
+# Minor but nice: %i
+
+    %w(a b c) #=> [a, b, c]
+
+    %i[a b c] #=> [:a, :b, :c]
 
 ---
 
-makevoid
+# Altogether: from
 
-http://makevoid.com
+    class String
+      def titleize
+        # ...
+      end
+    end
+
+    module Postable
+      def post(...)
+        # ...
+        super
+      end
+    end
+
+    class Post < BasePost
+
+      include Postable
+
+      def post(title: "Default Special Title")
+        # ...
+        super
+      end
+
+    end
 
 ---
 
-# credits:
+# To:
+
+    class Post
+
+      using Titleizer
+      prepend Postable
+
+      def post(title: "Default Special Title")
+        # ...
+        super
+      end
+
+    end
+
+---
 
 ## presentation tool?
 
@@ -57,8 +538,15 @@ awesome!
 - markdown
   - awesome for text + screenshots!
 - improved a bit
-  - added slides links #
-- has js tests (mocha)
+  - added slides links (#)
+  - added slides class (numeric)
+  
+- todo:
+  - replace with redcloth? (textile)
+  - labeled slide class
+  - load external code files [ruby:filename]
+    - 
+    - match and add data attribute for syntax highlighting
 
 ----
 
@@ -75,12 +563,18 @@ ftp: http://ftp.ruby-lang.org/pub/ruby/2.0/
 
 ---
 
-
 # thanks!
 
 
+self promotion: 
 
-### slides: [http://github.com/makevoid/ruby-in-italy-presentation](github.com/makevoid/ruby-in-italy-presentation)
+### "I'm free now, so let's talk!"
+
+
+
 
   
 ### Francesco  [@makevoid](http://makevoid.com) Canessa
+
+
+slides: [http://github.com/makevoid/ruby-in-italy-presentation](github.com/makevoid/ruby-in-italy-presentation)

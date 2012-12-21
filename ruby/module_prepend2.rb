@@ -7,17 +7,23 @@ end
 module B
   def foo
     super
-    puts 'from module'
+    puts 'from module B'
+  end
+end
+
+module C
+  def foo
+    super
+    puts 'from module C'
   end
 end
 
 class A
   prepend B
+  prepend C
 end
 
 A.new.foo
 #=> original
-# from module
-
-
-# same as Module#include but the ordering is inversed
+# from module B
+# from module C

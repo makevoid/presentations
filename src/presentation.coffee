@@ -3,6 +3,7 @@ class Presentation
   constructor: (options) ->
     @html = options.html
     @$ = options.jquery
+    @num = 0
 
 
   toDOMTree: ->
@@ -34,8 +35,12 @@ class Presentation
     result
 
 
+  get_num: ->
+    @num += 1
+    @num
+
   newSlide: ->
-    @$('<section/>')
+    @$("<section class='slide_#{@get_num()}'/>")
 
   newNotes: ->
     @$('<div class="notes"/>')

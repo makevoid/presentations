@@ -24,14 +24,14 @@ nav {
 }
 
 body, pre, pre code, li {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 2;
 }
 pre, pre code {
   line-height: 1.2;
 }
 h1 {
-  font-size: 56px;
+  font-size: 52px;
 }
 p, li {
   font-size: 24px;
@@ -74,4 +74,10 @@ img[alt='right'] {
 
 img {
 	max-width: 100%;
+}
+
+.slide_7 img {
+  margin: 30px;
+  float: right;
+  width: 200px;
 }
