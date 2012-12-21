@@ -577,4 +577,4 @@ self promotion:
 ### Francesco  [@makevoid](http://makevoid.com) Canessa
 
 
-slides: [http://github.com/makevoid/ruby-in-italy-presentation](github.com/makevoid/ruby-in-italy-presentation)
+slides: [https://github.com/makevoid/presentations/tree/ruby-2-0](github.com/makevoid/presentations)
